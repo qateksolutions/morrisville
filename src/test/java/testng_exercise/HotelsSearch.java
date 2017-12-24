@@ -1,4 +1,4 @@
-package expedia_com;
+package testng_exercise;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.openqa.selenium.By;
@@ -25,7 +25,7 @@ public class HotelsSearch {
     private final By SortByRecommended = By.xpath("//*[@id='sortContainer']//button[@data-opt-group='Recommended']");
 
     @BeforeMethod
-    public void browserinitialization(){
+    public void browserInitialization(){
         ChromeDriverManager.getInstance().setup();
         driver= new ChromeDriver();
         driver.manage().deleteAllCookies();
