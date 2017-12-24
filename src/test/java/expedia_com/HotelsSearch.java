@@ -20,9 +20,9 @@ public class HotelsSearch {
     private final By InputFieldGoingTo= By.id("hotel-destination-hp-hotel");
     private final By InputFieldCheckInDate= By.id("hotel-checkin-hp-hotel");
     private final By InputFieldCheckOutDate= By.id("hotel-checkout-hp-hotel");
-    private final By AdultDropdown= By.id("gcw-hotel-form-hp-hotel");
-    private final By SearchButton= By.xpath("//*[@id=gcw-hotel-form-hp-hotel]//label/button[@class='btn-primary btn-action  gcw-submit']");
-    private final By NoHotelFound= By.xpath("//*[@id='ajax-error']/div[@data-test-id='no-flights-found-error']");
+    private final By AdultDropdown= By.xpath("//*[@id='gcw-hotel-form-hp-hotel']//label/span[text()='Guests']/../select[contains(@class,'gcw-guests-field')]");
+    private final By SearchButton= By.xpath("//*[@id='gcw-hotel-form-hp-hotel']//label/button[contains(@class,'gcw-submit')]");
+    private final By SortByRecommended = By.xpath("//*[@id='sortContainer']//button[@data-opt-group='Recommended']");
 
     @BeforeMethod
     public void browserinitialization(){
@@ -30,7 +30,7 @@ public class HotelsSearch {
         driver= new ChromeDriver();
         driver.manage().deleteAllCookies();
         driver.get("https://www.expedia.com/");
-        driver.manage().window().fullscreen();
+        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
@@ -58,7 +58,8 @@ public class HotelsSearch {
         driver.findElement(SearchButton).click();
         System.out.println("Clicked on Search Button");
 
-        Boolean SearchResults= driver.findElements(NoHotelFound).isEmpty();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(SortByRecommended));
+        Boolean SearchResults= driver.findElement(SortByRecommended).isDisplayed();
         Assert.assertTrue(SearchResults,"There is No Hotel Results");
         System.out.println("Searched Hotel is returned results");
     }
