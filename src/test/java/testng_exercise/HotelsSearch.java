@@ -1,15 +1,17 @@
 package testng_exercise;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import providers.ActOn;
-import providers.AssertThat;
-import providers.WaitFor;
+import command_providers.ActOn;
+import command_providers.AssertThat;
+import command_providers.WaitFor;
+import utilities.Log;
 
 public class HotelsSearch {
     public WebDriver driver;
@@ -21,8 +23,10 @@ public class HotelsSearch {
     private final By SearchButton= By.xpath("//*[@id='gcw-hotel-form-hp-hotel']//label/button[contains(@class,'gcw-submit')]");
     private final By SortByRecommended = By.xpath("//*[@id='sortContainer']//button[@data-opt-group='Recommended']");
 
-    @BeforeMethod
+    @BeforeTest
     public void browserInitialization(){
+        DOMConfigurator.configure("log4j.xml");
+        Log.startTestCase("HotelsSearchTest");
         ChromeDriverManager.getInstance().setup();
         driver= new ChromeDriver();
         ActOn.browser(driver).openBrowser("https://www.expedia.com/");
@@ -33,8 +37,8 @@ public class HotelsSearch {
         ActOn.element(driver,HotelTab).click();
         WaitFor.elementToBePresent(driver, InputFieldGoingTo);
         ActOn.element(driver, InputFieldGoingTo).setValue("DFW");
-        ActOn.element(driver, InputFieldCheckInDate).setValue("12/28/2017");
-        ActOn.element(driver,InputFieldCheckOutDate).setValue("12/29/2017");
+        ActOn.element(driver, InputFieldCheckInDate).setValue("02/15/2018");
+        ActOn.element(driver,InputFieldCheckOutDate).setValue("02/16/2018");
         ActOn.element(driver, AdultDropdown).selectOption("1 adult, 0 children");
         ActOn.element(driver, SearchButton).click();
         WaitFor.elementToBeVisible(driver, SortByRecommended);
@@ -42,7 +46,8 @@ public class HotelsSearch {
 
     }
 
-    @AfterMethod
+    @AfterTest
     public void close(){
-        ActOn.browser(driver).closeBrowser(); }
+        ActOn.browser(driver).closeBrowser();
+        Log.endTestCase("HotelsSearchTest");}
 }
