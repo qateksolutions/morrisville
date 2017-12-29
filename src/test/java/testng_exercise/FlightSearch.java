@@ -32,6 +32,7 @@ public class FlightSearch {
 
     @Test
     public void run() {
+        //clicking on flight tab
         ActOn.element(driver, FlightTab).click();
         WaitFor.elementToBePresent(driver, OneWayButton);
         ActOn.element(driver, OneWayButton).click();
