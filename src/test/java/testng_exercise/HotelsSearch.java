@@ -4,15 +4,12 @@ import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.util.concurrent.TimeUnit;
+import providers.ActOn;
+import providers.AssertThat;
+import providers.WaitFor;
 
 public class HotelsSearch {
     public WebDriver driver;
@@ -28,44 +25,24 @@ public class HotelsSearch {
     public void browserInitialization(){
         ChromeDriverManager.getInstance().setup();
         driver= new ChromeDriver();
-        driver.manage().deleteAllCookies();
-        driver.get("https://www.expedia.com/");
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        ActOn.browser(driver).openBrowser("https://www.expedia.com/");
     }
 
     @Test
     public void run(){
-        driver.findElement(HotelTab).click();
-        System.out.println("Clicked on Hotels Tab");
+        ActOn.element(driver,HotelTab).click();
+        WaitFor.elementToBePresent(driver, InputFieldGoingTo);
+        ActOn.element(driver, InputFieldGoingTo).setValue("DFW");
+        ActOn.element(driver, InputFieldCheckInDate).setValue("12/28/2017");
+        ActOn.element(driver,InputFieldCheckOutDate).setValue("12/29/2017");
+        ActOn.element(driver, AdultDropdown).selectOption("1 adult, 0 children");
+        ActOn.element(driver, SearchButton).click();
+        WaitFor.elementToBeVisible(driver, SortByRecommended);
+        AssertThat.elementAssertions(driver, SortByRecommended).elementDisplayed();
 
-        WebDriverWait wait= new WebDriverWait(driver, 20);
-
-        driver.findElement(InputFieldGoingTo).sendKeys("DFW");
-        System.out.println("Typed Destination To Value");
-
-        driver.findElement(InputFieldCheckInDate).sendKeys("12/25/2017");
-        System.out.println("Typed Check-in Date");
-
-        driver.findElement(InputFieldCheckOutDate).sendKeys("12/28/2017");
-        System.out.println("Typed Check-Out Date");
-
-        Select adultDropdown= new Select(driver.findElement(AdultDropdown));
-        adultDropdown.selectByVisibleText("1 adult, 0 children");
-        System.out.println("Selected Total Guests Number");
-
-        wait.until(ExpectedConditions.elementToBeClickable(SearchButton));
-        driver.findElement(SearchButton).click();
-        System.out.println("Clicked on Search Button");
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(SortByRecommended));
-        Boolean SearchResults= driver.findElement(SortByRecommended).isDisplayed();
-        Assert.assertTrue(SearchResults,"There is No Hotel Results");
-        System.out.println("Searched Hotel is returned results");
     }
 
     @AfterMethod
     public void close(){
-        driver.quit();
-    }
+        ActOn.browser(driver).closeBrowser(); }
 }
