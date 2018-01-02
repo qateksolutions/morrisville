@@ -1,7 +1,9 @@
-package providers;
+package command_providers;
 
 import org.openqa.selenium.WebDriver;
+import utilities.Log;
 import java.util.concurrent.TimeUnit;
+
 
 public class BrowserActions {
     protected WebDriver driver;
@@ -15,13 +17,13 @@ public class BrowserActions {
         driver.get(url);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        System.out.println("Launch browser with the provided URL, '{}'" + url);
+        Log.info("Launch browser with the provided URL: " + url);
         return this;
     }
 
     public BrowserActions closeBrowser() {
         driver.quit();
-        System.out.println("Closed the opened browser");
+        Log.info("Closed the opened browser");
         return this;
     }
 }
