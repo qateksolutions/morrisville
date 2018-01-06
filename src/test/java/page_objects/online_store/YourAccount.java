@@ -19,7 +19,7 @@ public class YourAccount extends MenuNavigation{
         return this;
     }
 
-    public LogIn logOut() {
+    public LogIn ClickLogOut() {
         ActOn.element(driver, LogoutLink).click();
         return new LogIn(driver);
     }

@@ -41,4 +41,12 @@ public class ElementAssertions {
         Assert.assertTrue(SearchResults,"The expected element is not selected");
         return this;
     }
+
+    public ElementAssertions elementContains(String text) {
+        Log.info("Asserting that element Contains text: " + text);
+        String locatorText = driver.findElement(locator).getText();
+        Log.info("Captured text is: " + locatorText);
+        Assert.assertTrue(locatorText.contains(text), "Locator text doesn't contain the searched value");
+        return this;
+    }
 }

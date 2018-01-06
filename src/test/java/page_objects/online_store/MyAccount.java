@@ -32,7 +32,7 @@ public class MyAccount extends MenuNavigation {
         return this;
     }
 
-    public YourAccount login() {
+    public YourAccount ClickOnLogin() {
         ActOn.element(driver, LoginButton).click();
         return new YourAccount(driver);
     }

@@ -1,9 +1,7 @@
 package command_providers;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import utilities.Log;
 
@@ -34,7 +32,7 @@ public class ElementActions {
     }
 
     public ElementActions setValue(String value) {
-        Log.info("Attempting to set value on the element at: " + locator);
+        Log.info("Attempting to set value on the element at: " + locator + " with value " + value);
         getElement().clear();
         getElement().sendKeys(value);
         return this;
@@ -46,9 +44,20 @@ public class ElementActions {
     }
 
     public ElementActions selectOption(String value) {
-        Log.info("Attempting to select option from the dropdown at: " + locator);
+        Log.info("Attempting to select option from the dropdown at: " + locator + " with value " + value);
         Select select =  new Select(getElement());
         select.selectByVisibleText(value);
+        return this;
+    }
+
+    public ElementActions moveTo() {
+        Actions builder = new Actions(driver);
+        builder.moveToElement(getElement()).perform();
+        return this;
+    }
+
+    public ElementActions pressEnterKeyFromKeyboard() {
+        getElement().sendKeys(Keys.ENTER);
         return this;
     }
 }

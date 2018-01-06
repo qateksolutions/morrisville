@@ -1,4 +1,4 @@
-package test;
+package automation_test;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.apache.log4j.xml.DOMConfigurator;
@@ -30,8 +30,9 @@ public class LogInToOnlineStore {
                 .pageIsLoaded()
                 .typeUserName("qatek")
                 .typePassword("Automation1!")
-                .login().pageIsLoaded()
-                .logOut()
+                .ClickOnLogin()
+                .pageIsLoaded()
+                .ClickLogOut()
                 .pageIsLoaded()
                 .backToOnlineStore();
     }

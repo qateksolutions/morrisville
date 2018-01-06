@@ -7,7 +7,9 @@ import command_providers.ActOn;
 public class MenuNavigation {
     private final By HomeLink = By.linkText("Home");
     private final By AccessoriesLink = By.linkText("Accessories");
+    private final By ProductCategory = By.linkText("Product Category");
     private final By MyAccountLink = By.id("account");
+    private final By TextSearchBox = By.name("s");
     protected WebDriver driver;
 
     public MenuNavigation(WebDriver driver) {
@@ -24,8 +26,19 @@ public class MenuNavigation {
         return new MyAccount(driver);
     }
 
-    public Accessories goToAccessorries() {
+    public MenuNavigation moveToProductCategory() {
+        ActOn.element(driver, ProductCategory).moveTo();
+        return this;
+    }
+
+    public Accessories goToAccessories() {
         ActOn.element(driver, AccessoriesLink).click();
         return new Accessories(driver);
+    }
+
+    public ProductSearch searchProduct(String searchItem) {
+        ActOn.element(driver, TextSearchBox).setValue(searchItem);
+        ActOn.element(driver, TextSearchBox).pressEnterKeyFromKeyboard();
+        return new ProductSearch(driver);
     }
 }

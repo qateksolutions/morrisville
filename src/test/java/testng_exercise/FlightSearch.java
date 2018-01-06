@@ -21,7 +21,7 @@ public class FlightSearch {
     private final By AdultDropdown = By.id("flight-adults-hp-flight");
     private final By SearchButton = By.xpath("//*[@id='gcw-flights-form-hp-flight']//label/button[contains(@class,'gcw-submit')]");
     private final By NonStopFlightCheckBox = By.id("stopFilter_stops-0");
-    private final By NoFlightsFound = By.xpath("//*[@id='ajax-error']/div[@data-test-id='no-flights-found-error']");
+    private final By NoFlightsFound = By.xpath("//*[@id='ajax-error']/div[@data-automation_test-id='no-flights-found-error']");
 
     @BeforeTest
     public void browserInitialization() {
