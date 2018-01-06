@@ -1,0 +1,22 @@
+<suite name="automation" parallel="none">
+    <test name="Test01">
+        <classes>
+            <class name="automation_test.LogInToOnlineStore" />
+        </classes>
+    </test>
+    <test name="Test02">
+        <classes>
+            <class name="automation_test.BuyProductFromAccessories" />
+        </classes>
+    </test>
+    <test name="Test03">
+        <classes>
+            <class name="testng_exercise.FlightSearch" />
+        </classes>
+    </test>
+    <test name="test04">
+        <classes>
+            <class name="testng_exercise.HotelsSearch" />
+        </classes>
+    </test>
+</suite>
